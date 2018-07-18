@@ -51,6 +51,14 @@ class TemplatesManagerTest extends \PHPUnit\Framework\TestCase
         $tm->getTemplatePath('c');
     }
 
+    public function testInvalidAddTemplatePath()
+    {
+        $tm = new TemplatesManager();
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("Template namespace and path must be a not empty string");
+        $tm->addTemplatePath('c', 123);
+    }
+
     public function testInvalidTemplatePathNotIsset()
     {
         $tm = new TemplatesManager();
@@ -74,6 +82,14 @@ class TemplatesManagerTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(__FILE__, $tm->getTemplate('c'));
         $tm->clearTemplateMap();
         $this->assertEquals([], $tm->getTemplateMap());
+    }
+
+    public function testInvalidAddTemplate()
+    {
+        $tm = new TemplatesManager();
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("Template name and filename must be a not empty string");
+        $tm->addTemplate('', 'file');
     }
 
     public function testInvalidTemplateFilename()
