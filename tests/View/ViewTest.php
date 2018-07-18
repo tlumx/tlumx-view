@@ -195,6 +195,15 @@ class ViewTest extends \PHPUnit\Framework\TestCase
         $view->setMeta('name', 'value', '', ['scheme' => 'scheme']);
     }
 
+    public function testSetMetaNoHTML5Doctype()
+    {
+        $view = new View();
+        $view->setDoctype(View::DOCTYPE_XHTML1_0_STRICT);
+        $view->setMeta('name', 'value', '', ['lang' => 'en', 'invalid' => 'value']);
+        $expected = "<meta name=\"value\" content=\"\" lang=\"en\" />";
+        $this->assertEquals($expected, $view->getMeta());
+    }
+
     public function testGetSetLink()
     {
         $view = new View();
